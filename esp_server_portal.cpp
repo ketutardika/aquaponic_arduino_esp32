@@ -1,11 +1,11 @@
-#include <ESP8266WebServer.h>
+#include <WebServer.h>
 #include <EEPROM.h>
 
 #include "wifi_manager.h"
 #include "read_serial.h"
 #include "helper_function.h"
 
-ESP8266WebServer server(80);
+WebServer server(80);
 
 //Check if header is present and correct
 bool is_authentified(){

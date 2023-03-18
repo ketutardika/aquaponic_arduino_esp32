@@ -7,7 +7,7 @@
 #include "helper_function.h"
 #include "send_googlesheet.h"
 
-const int ledPin = D0;
+const int ledPin = 15;
 const int interval = 60000; // Waktu interval dalam milidetik (3 jam = 3 x 60 x 60 x 1000)
 long unsigned int previousMillis = 0;
 
@@ -18,6 +18,7 @@ void setup() {
   setup_wifi_manager();  
   setup_esp_server();
   setup_sendData();
+  setup_googlesheet();
   Serial.println("Server Start");
   setupLED(ledPin);
   powerOnLED(ledPin); 
@@ -26,7 +27,7 @@ void setup() {
 
 void loop() { 
   handle_esp_server();
-  readSerialData();
+  readSerialData();  
   String intervalhour = readEEPROM(0);
   long unsigned int intervalhourResult = intervalhour.toInt();
   long unsigned int intervalTotal = interval * intervalhourResult;
@@ -43,6 +44,7 @@ void loop() {
     powerOffLED(ledPin);
     delay(100);
     powerOnLED(ledPin);
+    loop_googlesheet();
     previousMillis = currentMillis;
   }  
 }

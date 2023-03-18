@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include <ESP8266WiFi.h>        //import ESP8266 WiFi library
-#include <ESP8266HTTPClient.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 #include <WiFiClient.h>
 #include <EEPROM.h>
 #include "read_serial.h"
