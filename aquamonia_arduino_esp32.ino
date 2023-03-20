@@ -7,7 +7,7 @@
 #include "helper_function.h"
 #include "send_googlesheet.h"
 
-const int ledPin = 15;
+const int ledPin = 2;
 const int interval = 60000; // Waktu interval dalam milidetik (3 jam = 3 x 60 x 60 x 1000)
 long unsigned int previousMillis = 0;
 
