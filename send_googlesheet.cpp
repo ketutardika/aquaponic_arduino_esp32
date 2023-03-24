@@ -5,7 +5,6 @@
 const char* host = "script.google.com";
 const int httpsPort = 443;
 WiFiClientSecure clientgo;
-String GoogleDevelopeID = "AKfycbw-x0Jm-hat-nsg4djzvH8nJ8bF2f-JF1HLSNR-XQHhPCK30aD_RpwBQ9jfBEB2pugW";
 
 
 void setup_googlesheet(){
@@ -13,6 +12,11 @@ void setup_googlesheet(){
 };
 
 void loop_googlesheet(){
+  String gsInterval = readEEPROM(3000);
+  String gsDevId = readEEPROM(3000 + gsInterval.length() + 1);
+  String ReadgsInterval = String(gsInterval);
+  String ReadgsDevId = String(gsDevId);
+  
   clientgo.setInsecure();
   String value_devices_1 = readEEPROM(4000);
   String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
@@ -23,7 +27,7 @@ void loop_googlesheet(){
   value_devices_6.replace(" ", "");
   value_devices_6.replace("\n","");
   
-  String request = "GET /macros/s/"+GoogleDevelopeID+"/exec?";
+  String request = "GET /macros/s/"+ReadgsDevId+"/exec?";
   request += "temp="+String(value_devices_1)+"&hum="+String(value_devices_2)+"&tds="+String(value_devices_3)+"&";
   request += "tbdt="+String(value_devices_4)+"&wtemp="+String(value_devices_5)+"&ph="+value_devices_6+" HTTP/1.1";
 

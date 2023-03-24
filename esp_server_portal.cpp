@@ -85,26 +85,6 @@ void handleRoot() {
   server.send(200, "text/plain", "Hello from Aquamonia!");
 }
 
-void home() {
-  if (!is_authentified()){
-    server.sendHeader("Location","/login");
-    server.sendHeader("Cache-Control","no-cache");
-    server.send(301);
-    return;
-  }
-  String html = "<html charset=UTF-8>";
-  html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
-  html += "<body>";
-  html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item active'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/device-monitor'>Device Monitor</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
-  html += "<main role='main' style='padding-top: 100px'> <header class='text-center'> <h1>Home</h1> </header></main>";
-  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
-  html += "</div>";
-  html += "</body>";
-  html += "</html>";  
-
-  server.send(200, "text/html", html);
-}
 
 void deviceMonitor() {
   if (!is_authentified()){
@@ -125,7 +105,7 @@ void deviceMonitor() {
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
   html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item active'> <a class='nav-link' href='/device-monitor'>Device Monitor</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item active'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='padding-top: 100px'> <header class='text-center'> <p>This Page will be refresh in <span id='time'>32</span> second</p><h1>Device Monitoring</h1> </header> <div class='row text-center'> <div class='col-12'></div><div id='gg2' class='col-4 gauge' data-value='" + String(value_devices_1) +"' data-title='Temperature Sensor'></div><div id='gg3' class='col-4 gauge' data-value='" + String(value_devices_2) +"' data-title='Humidity Sensor'></div><div id='gg4' class='col-4 gauge' data-value='" + String(value_devices_3) +"' data-title='TDS Sensor'></div><div id='gg5' class='col-4 gauge' data-value='" + String(value_devices_4) +"' data-title='Turbidity Sensor'></div><div id='gg6' class='col-4 gauge' data-value='" + String(value_devices_5) +"' data-title='Water Temperature'></div><div id='gg7' class='col-4 gauge' data-value='" + String(value_devices_6) +"' data-title='PH Water Sensor'></div></div></main>";
   html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/raphael.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/justgage.js'></script> <script src='https://aquamonia.com/arduino/assets/js/script.js'></script>";
   html += "</div>";
@@ -166,7 +146,7 @@ void deviceSetup(){
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
   html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item active'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/device-monitor'>Device Monitor</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item active'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='margin-top: 100px;margin-bottom: 50px;'> <header class='text-center'><h1 style='margin-bottom: 50px;'>Device API Key Setup</h1> </header>";
 
   html += "<div class='table-responsive' style='margin-bottom: 50px'>";
@@ -259,6 +239,63 @@ void deviceSetup(){
   server.send(200, "text/html", html);
 }
 
+void googleSheetSetup(){
+  if (!is_authentified()){
+    server.sendHeader("Location","/login");
+    server.sendHeader("Cache-Control","no-cache");
+    server.send(301);
+    return;
+  }
+
+  String gsInterval = readEEPROM(3000);
+  String gsDevId = readEEPROM(3000 + gsInterval.length() + 1);
+
+
+  String ReadgsInterval = String(gsInterval);
+  String ReadgsDevId = String(gsDevId);
+
+  String html = "<html charset=UTF-8>";
+  html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
+  html += "<body>";
+  html += "<div class='container'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item active'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
+  html += "<main role='main' style='margin-top: 100px;margin-bottom: 50px;'> <header class='text-center'><h1 style='margin-bottom: 50px;'>Google Sheet Setup</h1> </header>";
+
+  html += "<div class='table-responsive' style='margin-bottom: 50px'>";
+  html += "<form method='POST' action='/googleSheet-save-eeprom'>";
+  html += "<table class='table table-striped'>";
+  html += "<thead>";
+  html += "<tr>";
+  html += "<th>#</th>";
+  html += "<th>Configuration</th>";
+  html += "<th>Value</th>";
+  html += "</tr>";
+  html += "</thead>";
+  html += "<tbody>";
+  html += "<tr>";
+  html += "<th scope='row'>1</th>";
+  html += "<td>Data Sending Interval (Minutes)</td>";
+  html += "<td><input type='number' id='gsInterval' name='gsInterval' value='" + ReadgsInterval + "' style='width:100%;'></td>";
+  html += "</tr>";
+  html += "<tr>";
+  html += "<th scope='row'>2</th>";
+  html += "<td>Google Sheet Developer Id</td>";
+  html += "<td><input type='text' id='gsDevId' name='gsDevId' value='" + ReadgsDevId + "' style='width:100%;'></td>";
+  html += "</tr>";
+  html += "<tr>";
+  html += "</tbody>";
+  html += "</table>";
+  html += "<div class='text-center'><button type='submit' class='btn btn-primary'>Save Configuration</button></div>";
+  html += "</form>";
+  html += "</div>";
+  html += "</main>";
+  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
+  html += "</div>";
+  html += "</body>";
+  html += "</html>";    
+  server.send(200, "text/html", html);
+}
+
 void menureset(){
   if (!is_authentified()){
     server.sendHeader("Location","/login");
@@ -270,7 +307,7 @@ void menureset(){
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
   html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/device-monitor'>Device Monitor</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item active'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item active'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='http://os.aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='padding-top: 100px'> <header class='text-center'> <h1>Reset Menu</h1> </header>";
   html += "<div class='text-center'><a class='btn btn-primary' href='/reseting-eeprom'>Reset Configuration</a></div>";  
   html += "</main>";
@@ -282,6 +319,20 @@ void menureset(){
   server.send(200, "text/html", html);
 }
 
+
+void saveGsEeProm(){
+      String SendgsInterval = server.arg("gsInterval");
+      String SendgsDevId = server.arg("gsDevId");
+
+      int addr = 3000; // alamat awal penyimpanan di EEPROM
+      saveEEPROM(addr, SendgsInterval);
+      addr += SendgsInterval.length() + 1;
+      saveEEPROM(addr, SendgsDevId);
+
+      server.sendHeader("Location","/gs-setup");
+      server.sendHeader("Cache-Control","no-cache");
+      server.send(301);
+}
 
 void saveWebEeProm(){
       String SendInterval = server.arg("interval");
@@ -335,13 +386,15 @@ void resetingEeprom(){
 void setup_esp_server(){
   setupEEPROM();
   // inisialisasi server web dan menangani permintaan root
-  server.on("/", home);
+  server.on("/", deviceMonitor);
   server.on("/login", handleLogin);
   server.on("/device-setup", deviceSetup);
-  server.on("/device-monitor", deviceMonitor);
+  server.on("/gs-setup", googleSheetSetup);  
   server.on("/menu-reset", menureset);
   server.on("/reseting-eeprom", resetingEeprom);
   server.on("/save-eeprom", saveWebEeProm);
+  server.on("/googleSheet-save-eeprom", saveGsEeProm);
+  
 
   server.onNotFound(handleNotFound);
   //here the list of headers to be recorded
