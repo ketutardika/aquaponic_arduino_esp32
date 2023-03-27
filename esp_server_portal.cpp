@@ -85,6 +85,107 @@ void handleRoot() {
   server.send(200, "text/plain", "Hello from Aquamonia!");
 }
 
+String getTemperature() {
+  String value_devices_1 = readEEPROM(4000);
+  return String(value_devices_1);
+}
+   
+String getHumidity() {
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  return String(value_devices_2);
+}
+
+String gettdsval() {
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  String value_devices_3 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + 2);
+  return String(value_devices_3);
+}
+
+String gettbdtval() {
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  String value_devices_3 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + 2);
+  String value_devices_4 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + 3);
+  return String(value_devices_4);
+}
+
+String getwtempval() {
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  String value_devices_3 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + 2);
+  String value_devices_4 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + 3);
+  String value_devices_5 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + 4);
+  return String(value_devices_5);
+}
+
+String getphval() {
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  String value_devices_3 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + 2);
+  String value_devices_4 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + 3);
+  String value_devices_5 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + 4);
+  String value_devices_6 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + value_devices_5.length() + 5);
+  String value_devices_6_ph = String(value_devices_6.substring(0, 3));
+  return String(value_devices_6_ph);
+}
+
+void getTemp() {
+  server.send(200, "text/plain", getTemperature().c_str());
+}
+
+void getHum() {
+  server.send(200, "text/plain", getHumidity().c_str());
+}
+
+void gettds() {
+  server.send(200, "text/plain", gettdsval().c_str());
+}
+
+void gettbdt() {
+  server.send(200, "text/plain", gettbdtval().c_str());
+}
+
+void getwtemp() {
+  server.send(200, "text/plain", getwtempval().c_str());
+}
+
+void getph() {
+  server.send(200, "text/plain", getphval().c_str());
+}
+
+
+
+void newHome() {
+  if (!is_authentified()){
+    server.sendHeader("Location","/login");
+    server.sendHeader("Cache-Control","no-cache");
+    server.send(301);
+    return;
+  }
+
+  String value_devices_1 = readEEPROM(4000);
+  String value_devices_2 = readEEPROM(4000 + value_devices_1.length() + 1);
+  String value_devices_3 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + 2);
+  String value_devices_4 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + 3);
+  String value_devices_5 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + 4);
+  String value_devices_6 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + value_devices_5.length() + 5);
+  
+  String html = "<html charset=UTF-8>";
+  html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
+  html += "<body>";
+  html += "<div class='container d-flex justify-content-center container-height'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item active'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
+  html += "<div class='weather' style='padding-top: 80px'> <div class='row'> <div class=' col-md-6'> <div class='card card-2'> <span class='icon'><img class='img-fluid' src='https://img.icons8.com/office/80/000000/partly-cloudy-day.png'/></span> <div class='title'><p>Temperature</p></div><div id='temperature' class='temp'>"+value_devices_1+"<sup>&deg;C</sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>19&deg;C</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>28&deg;C</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>35&deg;C</div></div></div></div></div><div class='col-md-6'> <div class='card card-2'> <span class='icon'><img class='img-fluid' src='https://img.icons8.com/external-justicon-flat-justicon/256/external-humidity-weather-justicon-flat-justicon-1.png'/></span> <div class='title'><p>Humidity</p></div><div id='humidity' class='temp'>"+value_devices_2+"<sup>%</sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>60%</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>78%</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>95%</div></div></div></div></div></div><div class='row'> <div class='col-md-6'> <div class='card card-2'> <span class='icon'><img src='https://img.icons8.com/external-itim2101-blue-itim2101/256/external-meter-devices-service-itim2101-blue-itim2101.png'/></span> <div class='title'><p>TDS</p></div><div id='tds' class='temp'>"+value_devices_3+"<sup></sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>200</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>400</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>800</div></div></div></div></div><div class='col-md-6'> <div class='card card-2'> <span class='icon'><img src='https://img.icons8.com/external-itim2101-blue-itim2101/256/external-meter-devices-service-itim2101-blue-itim2101.png'/></span> <div class='title'><p>Turbidity</p></div><div id='tbdt' class='temp'>"+value_devices_4+"<sup></sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>300</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>500</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>700</div></div></div></div></div></div><div class='row'> <div class='col-md-6'> <div class='card card-2'> <span class='icon'><img src='https://img.icons8.com/office/256/dew-point.png'/></span> <div class='title'><p>Water Temp</p></div><div id='wtemp' class='temp'>"+value_devices_5+"<sup>&deg;C</sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>19&deg;C</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>28&deg;C</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>35&deg;C</div></div></div></div></div><div class='col-md-6'> <div class='card card-2'> <span class='icon'><img src='https://img.icons8.com/external-flat-andi-nur-abdillah/256/external-pH-skincare-(flat)-flat-andi-nur-abdillah.png'/></span> <div class='title'><p>PH</p></div><div id='ph' class='temp'>"+value_devices_6+"<sup>ph</sup></div><div class='row'> <div class='col-4'> <div class='header'>Min</div><div class='value'>6ph</div></div><div class='col-4'> <div class='header'>Normal</div><div class='value'>7.2ph</div></div><div class='col-4'> <div class='header'>Max</div><div class='value'>9ph</div></div></div></div></div></div></div>";
+  html += "</div>";
+  html += "<footer class='text-center p-2' style='background-color: rgba(0, 0, 0, 0.05);'> <div class='text-center p-2'> Copyright ©2023 <a class='text-reset fw-bold' href='https://aquamonia.com'>aquamonia.com</a> All rights reserved </div></footer>";  
+  html += "<script>setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('temperature').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvaluetemp', true); xhttp.send();}, 15000 ) ; setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('humidity').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvaluehum', true); xhttp.send();}, 15000 ) ; setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('tds').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvaluetds', true); xhttp.send();}, 15000 ) ; setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('tbdt').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvaluetbdt', true); xhttp.send();}, 15000 ) ; setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('wtemp').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvaluewtemp', true); xhttp.send();}, 15000 ) ; setInterval(function ( ){var xhttp=new XMLHttpRequest(); xhttp.onreadystatechange=function(){if (this.readyState==4 && this.status==200){document.getElementById('ph').innerHTML=this.responseText;}}; xhttp.open('GET', '/getvalueph', true); xhttp.send();}, 15000 ) ;</script>";
+  html += "</body>";
+  html += "</html>";  
+  server.send(200, "text/html", html);
+}
+
 
 void deviceMonitor() {
   if (!is_authentified()){
@@ -104,11 +205,12 @@ void deviceMonitor() {
   String html = "<html charset=UTF-8>";
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
-  html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item active'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
+  html += "<div class='container container-height'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item active'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='padding-top: 100px'> <header class='text-center'> <p>This Page will be refresh in <span id='time'>32</span> second</p><h1>Device Monitoring</h1> </header> <div class='row text-center'> <div class='col-12'></div><div id='gg2' class='col-4 gauge' data-value='" + String(value_devices_1) +"' data-title='Temperature Sensor'></div><div id='gg3' class='col-4 gauge' data-value='" + String(value_devices_2) +"' data-title='Humidity Sensor'></div><div id='gg4' class='col-4 gauge' data-value='" + String(value_devices_3) +"' data-title='TDS Sensor'></div><div id='gg5' class='col-4 gauge' data-value='" + String(value_devices_4) +"' data-title='Turbidity Sensor'></div><div id='gg6' class='col-4 gauge' data-value='" + String(value_devices_5) +"' data-title='Water Temperature'></div><div id='gg7' class='col-4 gauge' data-value='" + String(value_devices_6) +"' data-title='PH Water Sensor'></div></div></main>";
-  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/raphael.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/justgage.js'></script> <script src='https://aquamonia.com/arduino/assets/js/script.js'></script>";
   html += "</div>";
+  html += "<footer class='text-center p-2' style='background-color: rgba(0, 0, 0, 0.05);'> <div class='text-center p-2'> Copyright ©2023 <a class='text-reset fw-bold' href='https://aquamonia.com'>aquamonia.com</a> All rights reserved </div></footer>";  
+  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/raphael.min.js'></script> <script src='https://aquamonia.com/arduino/assets/js/justgage.js'></script> <script src='https://aquamonia.com/arduino/assets/js/script.js'></script>";
   html += "</body>";
   html += "</html>";  
   server.send(200, "text/html", html);
@@ -145,8 +247,8 @@ void deviceSetup(){
   String html = "<html charset=UTF-8>";
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
-  html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item active'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
+  html += "<div class='container container-height'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item active'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='margin-top: 100px;margin-bottom: 50px;'> <header class='text-center'><h1 style='margin-bottom: 50px;'>Device API Key Setup</h1> </header>";
 
   html += "<div class='table-responsive' style='margin-bottom: 50px'>";
@@ -232,8 +334,9 @@ void deviceSetup(){
   html += "</form>";
   html += "</div>";
   html += "</main>";
-  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</div>";
+  html += "<footer class='text-center p-2' style='background-color: rgba(0, 0, 0, 0.05);'> <div class='text-center p-2'> Copyright ©2023 <a class='text-reset fw-bold' href='https://aquamonia.com'>aquamonia.com</a> All rights reserved </div></footer>";  
+  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</body>";
   html += "</html>";    
   server.send(200, "text/html", html);
@@ -257,8 +360,8 @@ void googleSheetSetup(){
   String html = "<html charset=UTF-8>";
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
-  html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item active'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
+  html += "<div class='container container-height'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item active'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href='https://aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='margin-top: 100px;margin-bottom: 50px;'> <header class='text-center'><h1 style='margin-bottom: 50px;'>Google Sheet Setup</h1> </header>";
 
   html += "<div class='table-responsive' style='margin-bottom: 50px'>";
@@ -289,8 +392,9 @@ void googleSheetSetup(){
   html += "</form>";
   html += "</div>";
   html += "</main>";
-  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</div>";
+  html += "<footer class='text-center p-2' style='background-color: rgba(0, 0, 0, 0.05);'> <div class='text-center p-2'> Copyright ©2023 <a class='text-reset fw-bold' href='https://aquamonia.com'>aquamonia.com</a> All rights reserved </div></footer>";  
+  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</body>";
   html += "</html>";    
   server.send(200, "text/html", html);
@@ -306,13 +410,14 @@ void menureset(){
   String html = "<html charset=UTF-8>";
   html += "<head> <meta charset='utf-8'/> <meta name='viewport' content='width=device-width'> <title>Arduino Device Setup | Aquamonia</title> <meta name='title' content='Arduino Device Setup | Aquamonia'> <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css'> <link rel='stylesheet' href='https://aquamonia.com/arduino/assets/css/style.css'></head>";
   html += "<body>";
-  html += "<div class='container'>";
-  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item active'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li><li class='nav-item'> <a class='nav-link' href='http://os.aquamonia.com' target='_blank'>OS Aquamonia</a> </li></ul> </div></div></nav> </header>";
+  html += "<div class='container container-height'>";
+  html += "<header> <nav class='navbar navbar-expand-md navbar-light fixed-top' style='background-color: #e3f2fd;'> <div class='container'> <a class='navbar-brand' href='/'>Aquamonia Devices Setup</a> <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'> <span class='navbar-toggler-icon'></span> </button> <div class='collapse navbar-collapse' id='navbarCollapse'> <ul class='navbar-nav ml-auto'> <li class='nav-item'> <a class='nav-link' href='/'>Home</a> </li><li class='nav-item'> <a class='nav-link' href='/device-setup'>Setup Device API's</a> </li><li class='nav-item'> <a class='nav-link' href='/gs-setup'>Setup Google Sheet</a> </li><li class='nav-item active'> <a class='nav-link' href='/menu-reset'>Reset Config</a> </li><li class='nav-item'> <a class='nav-link' href='http://os.aquamonia.com' target='_blank'>OS Aquamonia</a> </li><li class='nav-item'> <a class='nav-link' href=\"/login?DISCONNECT=YES\">Logout</a> </li></ul> </div></div></nav> </header>";
   html += "<main role='main' style='padding-top: 100px'> <header class='text-center'> <h1>Reset Menu</h1> </header>";
   html += "<div class='text-center'><a class='btn btn-primary' href='/reseting-eeprom'>Reset Configuration</a></div>";  
   html += "</main>";
-  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</div>";
+  html += "<footer class='text-center p-2' style='background-color: rgba(0, 0, 0, 0.05);'> <div class='text-center p-2'> Copyright ©2023 <a class='text-reset fw-bold' href='https://aquamonia.com'>aquamonia.com</a> All rights reserved </div></footer>";  
+  html += "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js'></script> <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js'></script>";
   html += "</body>";
   html += "</html>";  
 
@@ -386,7 +491,7 @@ void resetingEeprom(){
 void setup_esp_server(){
   setupEEPROM();
   // inisialisasi server web dan menangani permintaan root
-  server.on("/", deviceMonitor);
+  server.on("/", newHome);
   server.on("/login", handleLogin);
   server.on("/device-setup", deviceSetup);
   server.on("/gs-setup", googleSheetSetup);  
@@ -394,6 +499,13 @@ void setup_esp_server(){
   server.on("/reseting-eeprom", resetingEeprom);
   server.on("/save-eeprom", saveWebEeProm);
   server.on("/googleSheet-save-eeprom", saveGsEeProm);
+  server.on("/deviceMonitor",  deviceMonitor);
+  server.on("/getvaluetemp",  getTemp);
+  server.on("/getvaluehum",  getHum);
+  server.on("/getvaluetds",  gettds);
+  server.on("/getvaluetbdt",  gettbdt);
+  server.on("/getvaluewtemp",  getwtemp);
+  server.on("/getvalueph",  getph);
   
 
   server.onNotFound(handleNotFound);

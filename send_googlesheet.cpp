@@ -42,15 +42,6 @@ void loop_googlesheet(){
   clientgo.println("content-type: text/html");
   clientgo.println("User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36");
   clientgo.println("Connection: close\r\n");
-
-  Serial.println("request sent");
-  Serial.println(value_devices_1);
-  Serial.println(value_devices_2);
-  Serial.println(value_devices_3);
-  Serial.println(value_devices_4);
-  Serial.println(value_devices_5);
-  Serial.println(value_devices_6);
-  Serial.println(request);
   clientgo.stop();
-  delay(20000);
+  delay(10000);
 };
