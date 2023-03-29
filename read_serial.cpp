@@ -69,20 +69,31 @@ void readSerialData() {
     int commaIndex = data.indexOf(',');
     String temperatureva = data.substring(0, commaIndex);
     data = data.substring(commaIndex + 1);
+    
     commaIndex = data.indexOf(',');
     String humidityva = data.substring(0, commaIndex);
     data = data.substring(commaIndex + 1);
+    
     commaIndex = data.indexOf(',');
     String tdsva = data.substring(0, commaIndex);
     data = data.substring(commaIndex + 1);
+    
     commaIndex = data.indexOf(',');
     String turbidityva = data.substring(0, commaIndex);
     data = data.substring(commaIndex + 1);
+    
     commaIndex = data.indexOf(',');
     String  water_temperatureva = data.substring(0, commaIndex);
     data = data.substring(commaIndex + 1);
+    
     commaIndex = data.indexOf(',');
-    String phva = data;
+    String phva = data.substring(0, commaIndex);
+    data = data.substring(commaIndex + 1);
+
+    commaIndex = data.indexOf(',');
+    String w_levelva = data;
+
+    
 
     String temperature = temperatureva.length() > 0 ? temperatureva : "-1";
     String humidity = humidityva.length() > 0 ? humidityva : "-1";
@@ -90,6 +101,7 @@ void readSerialData() {
     String turbidity = turbidityva.length() > 0 ? turbidityva : "-1";
     String water_temp = water_temperatureva.length() > 0 ? water_temperatureva : "-1";
     String ph = phva.length() > 0 ? phva : "-1";
+    String w_level = w_levelva.length() > 0 ?  w_levelva : "-1";
 
 
     int addr = 4000; // alamat awal penyimpanan di EEPROM
@@ -102,8 +114,10 @@ void readSerialData() {
     saveEEPROM(addr, turbidity);
     addr += turbidity.length() + 1; // tambahkan panjang string + 1 untuk null terminator
     saveEEPROM(addr, water_temp);
-    addr += water_temp.length() + 1; // tambahkan panjang string + 1 untuk null terminator
+    addr += water_temp.length() + 1;
     saveEEPROM(addr, ph);
+    addr += ph.length() + 1;
+    saveEEPROM(addr, w_level);
 
 
     IPAddress broadCast = WiFi.localIP();
@@ -131,7 +145,9 @@ void readSerialData() {
     Serial.print("  Water Temperature: ");
     Serial.print(water_temp);
     Serial.print("  PH: ");
-    Serial.println(ph);
+    Serial.print(ph);
+    Serial.print("  Water Level: ");
+    Serial.println(w_level);
   }
 }
 

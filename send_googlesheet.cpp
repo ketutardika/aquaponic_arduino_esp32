@@ -24,12 +24,13 @@ void loop_googlesheet(){
   String value_devices_4 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + 3);
   String value_devices_5 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + 4);
   String value_devices_6 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + value_devices_5.length() + 5);
-  value_devices_6.replace(" ", "");
-  value_devices_6.replace("\n","");
+  String value_devices_7 = readEEPROM(4000 + value_devices_1.length() + value_devices_2.length() + value_devices_3.length() + value_devices_4.length() + value_devices_5.length() + value_devices_6.length() + 6);
+  value_devices_7.replace(" ", "");
+  value_devices_7.replace("\n","");
   
   String request = "GET /macros/s/"+ReadgsDevId+"/exec?";
   request += "temp="+String(value_devices_1)+"&hum="+String(value_devices_2)+"&tds="+String(value_devices_3)+"&";
-  request += "tbdt="+String(value_devices_4)+"&wtemp="+String(value_devices_5)+"&ph="+value_devices_6+" HTTP/1.1";
+  request += "tbdt="+String(value_devices_4)+"&wtemp="+String(value_devices_5)+"&ph="+value_devices_6+"&wlevel="+value_devices_7+" HTTP/1.1";
 
   if (!clientgo.connect(host, httpsPort)) {
     Serial.println("connection failed");
