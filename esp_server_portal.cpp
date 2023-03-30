@@ -163,6 +163,7 @@ void fishfeeder() {
   motor.write(90);
   delay(200);
   motor.write(0);
+  delay(5000);
 }
 
 
