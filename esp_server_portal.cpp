@@ -159,7 +159,15 @@ void getph() {
 
 void fishfeeder() {
   motor.write(0);
-  delay(800);
+  delay(300);
+  motor.write(30);
+  delay(100);
+  motor.write(0);
+  delay(300);
+  motor.write(30);
+  delay(100);
+  motor.write(0);
+  delay(600);
   motor.write(90);
   delay(200);
   motor.write(0);
